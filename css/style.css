@@ -324,7 +324,7 @@ p {
 .hero-bg {
     position: absolute;
     inset: 0;
-    background-image: url('../img/bouwplan.jpg');
+    background-image: url('lotenlening/img/bouwplan.jpg');
     background-size: cover;
     background-position: center;
     transform: scale(1.04);
