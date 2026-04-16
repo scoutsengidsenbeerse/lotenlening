@@ -1213,9 +1213,27 @@ footer {
         font-size: 1.5rem; /* Was 2rem */
     }
     .iban-wrapper {
-        flex-direction: column;
+        flex-direction: row !important;
+        justify-content: center;
         gap: 0.5rem;
-        width: 100%;
+        width: auto;
+        padding: 0.4rem 0.75rem;
+    }
+
+    .iban {
+        font-size: 0.85rem;
+        letter-spacing: 0.02em;
+    }
+
+    .copy-btn {
+        width: 26px;
+        height: 26px;
+        flex-shrink: 0;
+    }
+
+    .copy-btn svg {
+        width: 13px;
+        height: 13px;
     }
 
     footer {
@@ -1246,7 +1264,6 @@ footer {
         position: relative;
         display: flex;
         align-items: center;
-        /* Behoud ruimte voor logo links en hamburger rechts */
         justify-content: space-between;
     }
 
@@ -1254,8 +1271,6 @@ footer {
     .nav-brand {
         z-index: 2;
         margin-left: -0.5rem;
-        /* Belangrijk: haal de flex-gap weg op mobiel zodat de tekst
-           niet naast het logo probeert te staan */
         gap: 0;
     }
 
@@ -1264,7 +1279,6 @@ footer {
         width: auto;
     }
 
-    /* De tekst loskoppelen en exact in het midden van de navbar zetten */
     .nav-brand-text {
         position: absolute;
         left: 50%;
@@ -1273,7 +1287,7 @@ footer {
         width: auto;
         margin: 0;
         z-index: 1;
-        pointer-events: none; /* Zorgt dat je door de tekst heen op de link kunt klikken */
+        pointer-events: none;
     }
 
     .nav-brand-text span {
@@ -1281,7 +1295,6 @@ footer {
         display: block;
     }
 
-    /* Hamburger rechts */
     .hamburger {
         position: relative;
         z-index: 2;
