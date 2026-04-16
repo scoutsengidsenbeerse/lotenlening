@@ -152,7 +152,7 @@ p {
 .nav-brand {
     display: flex;
     align-items: center;
-    gap: 0.875rem;
+    gap: 6rem;
     flex-shrink: 0;
 }
 
@@ -1233,5 +1233,57 @@ footer {
     .footer-bottom p {
         padding-top: 0;
         font-size: 0.6rem;
+    }
+}
+
+/* Mobiele aanpassingen voor de navbar */
+@media (max-width: 899px) {
+    .nav-brand-text .hide-mobile {
+        display: none !important;
+    }
+
+    .nav-inner {
+        position: relative;
+        display: flex;
+        align-items: center;
+        /* Behoud ruimte voor logo links en hamburger rechts */
+        justify-content: space-between;
+    }
+
+    /* Logo links */
+    .nav-brand {
+        z-index: 2;
+        margin-left: -0.5rem;
+        /* Belangrijk: haal de flex-gap weg op mobiel zodat de tekst
+           niet naast het logo probeert te staan */
+        gap: 0;
+    }
+
+    .nav-brand img {
+        height: 38px;
+        width: auto;
+    }
+
+    /* De tekst loskoppelen en exact in het midden van de navbar zetten */
+    .nav-brand-text {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: auto;
+        margin: 0;
+        z-index: 1;
+        pointer-events: none; /* Zorgt dat je door de tekst heen op de link kunt klikken */
+    }
+
+    .nav-brand-text span {
+        font-size: 1.1rem;
+        display: block;
+    }
+
+    /* Hamburger rechts */
+    .hamburger {
+        position: relative;
+        z-index: 2;
     }
 }
