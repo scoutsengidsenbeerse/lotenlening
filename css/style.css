@@ -3,8 +3,6 @@
    Style Sheet
 ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
-
 :root {
     --green: #2D5016;
     --brown: #8B6F47;
@@ -105,6 +103,23 @@ p {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+}
+
+/* Utility classes */
+.text-center {
+    text-align: center;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+/* Modifier class voor kleine knoppen */
+.btn-sm {
+    padding: 0.5rem 1.25rem !important;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: inline-block;
 }
 
 /* ============================================================
@@ -465,26 +480,6 @@ section.bg-green {
     font-size: 1.05rem;
     margin-bottom: 1.25rem;
     text-align: justify;
-}
-
-.brochure-box {
-    display: inline-flex;
-    align-items: center;
-    gap: 1.25rem;
-    background: rgba(212,165,116,0.12);
-    border: 2px solid var(--gold);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem 1.5rem;
-    margin-top: 1.75rem;
-}
-
-.brochure-box-label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--brown);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
 }
 
 .motivatie-img {
@@ -952,7 +947,7 @@ section.bg-green {
     justify-content: center;
 }
 
-.contact-item-link:hover, .contact-item-hover:hover {
+.contact-item-link:hover {
     border-color: var(--gold);
     transform: translateY(-4px);
     box-shadow: var(--card-shadow-hover);
@@ -1043,25 +1038,6 @@ footer {
     filter: brightness(0) invert(1) opacity(0.85);
     height: auto;
     margin: 0 auto;
-}
-
-.footer-links-inline {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
-}
-
-.footer-links-inline a {
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.7);
-    font-weight: 500;
-    transition: var(--transition);
-}
-
-.footer-links-inline a:hover {
-    color: var(--gold);
 }
 
 .footer-socials {

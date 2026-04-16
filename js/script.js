@@ -8,11 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ==========================================================
      NAVBAR & MOBILE MENU
   ========================================================== */
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 20);
-  }, { passive: true });
-
   const hamburger = document.getElementById('hamburger');
   const mobileNav = document.getElementById('mobile-nav');
 
@@ -68,14 +63,48 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================
-     SCROLL OBSERVER
+       SCROLL HANDLING (NAVBAR & ACTIVE LINKS)
+    ========================================================== */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  let ticking = false;
+
+  function handleScroll() {
+    // 1. Navbar shadow
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+
+    // 2. Active link highlighting
+    const scrollY = window.scrollY + (navbar ? navbar.offsetHeight : 80) + 60;
+
+    sections.forEach(section => {
+      if (section.offsetTop <= scrollY && section.offsetTop + section.offsetHeight > scrollY) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const active = document.querySelector(`.nav-links a[href="#${section.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        handleScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  /* ==========================================================
+     SCROLL ANIMATIONS (FADE IN)
   ========================================================== */
   const observerOptions = {
-    threshold: 0.12,
-    rootMargin: '0px 0px -40px 0px'
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.15
   };
 
-  const observer = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
@@ -87,25 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.fade-in, .fade-in-stagger').forEach(el => {
     observer.observe(el);
   });
-
-  /* ==========================================================
-     ACTIVE LINK HIGHLIGHTING
-  ========================================================== */
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-
-  function setActiveLink() {
-    const scrollY = window.scrollY + (navbar ? navbar.offsetHeight : 80) + 60;
-    sections.forEach(section => {
-      if (section.offsetTop <= scrollY && section.offsetTop + section.offsetHeight > scrollY) {
-        navLinks.forEach(link => link.classList.remove('active'));
-        const active = document.querySelector(`.nav-links a[href="#${section.id}"]`);
-        if (active) active.classList.add('active');
-      }
-    });
-  }
-
-  window.addEventListener('scroll', setActiveLink, { passive: true });
 
   /* ==========================================================
        COPY TO CLIPBOARD & TOAST
