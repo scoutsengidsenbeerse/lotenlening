@@ -167,3 +167,70 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2000);
   }
 });
+
+/* ==========================================================
+   PROGRESS BAR DATA FETCH (Google Sheets)
+========================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRCL6GDypagbVTG9rZQdW8gY436MxgXMTscfOSsTkJ5lsQ_TBBuHA9Lpv7o4n2G4LQCoaxTXJbeGhR8/pub?gid=0&single=true&output=csv';
+    const MAX_LOTEN = 240;
+
+    async function fetchProgress() {
+        try {
+            const response = await fetch(CSV_URL);
+            if (!response.ok) throw new Error("Netwerk respons was niet ok");
+
+            const csvText = await response.text();
+            const rows = csvText.split('\n');
+
+            // We zoeken in cel C5:
+            if (rows.length >= 5) {
+                const columns = rows[4].split(',');
+
+                if (columns.length >= 3) {
+                    // Haal alle letters/spaties/quotes weg, behoud enkel cijfers
+                    const rawValue = columns[2].replace(/[^0-9]/g, '');
+                    const lotenVerkocht = parseInt(rawValue, 10);
+
+                    if (!isNaN(lotenVerkocht)) {
+                        updateProgressBar(lotenVerkocht);
+                        return;
+                    }
+                }
+            }
+            throw new Error("Cel C5 niet gevonden of bevat geen geldig getal.");
+
+        } catch (error) {
+            console.error("Fout bij ophalen voortgang:", error);
+            document.getElementById('progress-text').innerText = "Voortgang momenteel niet beschikbaar";
+        }
+    }
+
+    function updateProgressBar(verkocht) {
+        // Zorg ervoor dat het getal niet onder 0 of boven het maximum gaat
+        const progress = Math.min(Math.max(verkocht, 0), MAX_LOTEN);
+        const percentage = (progress / MAX_LOTEN) * 100;
+
+        const bar = document.getElementById('progress-bar');
+        const textElement = document.getElementById('progress-text');
+
+        const currentValueElement = document.getElementById('progress-current-value');
+
+        // Kleine timeout zodat de animatie soepel inlaadt
+        setTimeout(() => {
+            bar.style.width = percentage + '%';
+            bar.setAttribute('aria-valuenow', progress);
+        }, 300);
+
+        textElement.innerHTML = `<strong>${progress}</strong> van ${MAX_LOTEN} loten verkocht`;
+
+        if (currentValueElement) {
+            const euroBedrag = progress * 250;
+            currentValueElement.innerText = progress > 0 ? `€ ${euroBedrag.toLocaleString('nl-BE')}` : '';        }
+    }
+
+    // Roep de functie aan als het element op de pagina bestaat
+    if (document.getElementById('progress-bar')) {
+        fetchProgress();
+    }
+});
