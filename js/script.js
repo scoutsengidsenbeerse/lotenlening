@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (currentValueElement) {
             const euroBedrag = progress * 250;
-            currentValueElement.innerText = progress > 0 ? `€ ${euroBedrag.toLocaleString('nl-BE')}` : '';        }
+            currentValueElement.innerText = progress > 0 ? `€${euroBedrag.toLocaleString('nl-BE')}` : '';        }
     }
 
     // Roep de functie aan als het element op de pagina bestaat
